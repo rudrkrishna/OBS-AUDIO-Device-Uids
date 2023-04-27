@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreAudio
+import AVFoundation
 
 
 func getAudioDeviceIDs() -> [AudioDeviceID] {
@@ -101,13 +102,26 @@ func getAudioDeviceNamesAndUIDs(deviceIDs: [AudioDeviceID]) -> [(name: String, u
     return deviceNamesAndUIDs
 }
 
+func getVideoDevices() -> [AVCaptureDevice] {
+    let devices = AVCaptureDevice.DiscoverySession(
+        deviceTypes: [.builtInWideAngleCamera, .externalUnknown],
+        mediaType: .video,
+        position: .unspecified
+    ).devices
+    
+    return devices
+}
 
 func main() {
     let deviceIDs = getAudioDeviceIDs()
        let deviceNamesAndUIDs = getAudioDeviceNamesAndUIDs(deviceIDs: deviceIDs)
        for (_,device) in deviceNamesAndUIDs.enumerated() {
-           print("Name:\(device.name)+UID:\(device.uid)")
+           print("Name:\(device.name)+UDID:\(device.uid)")
        }
-
+    
+    let videoDevices = getVideoDevices()
+    for device in videoDevices {
+        print("Name:\(device.localizedName)+UDID:\(device.uniqueID)")
+    }
 }
 main()
