@@ -17,10 +17,10 @@ func getAudioDeviceIDs() -> [AudioDeviceID] {
         mScope: kAudioObjectPropertyScopeGlobal,
         mElement: kAudioObjectPropertyElementMain
     )
-
+    
     var deviceIDs: [AudioDeviceID] = []
     var dataSize: UInt32 = 0
-
+    
     // get the size of the device ID array
     var status = AudioObjectGetPropertyDataSize(
         AudioObjectID(kAudioObjectSystemObject),
@@ -29,12 +29,12 @@ func getAudioDeviceIDs() -> [AudioDeviceID] {
         nil,
         &dataSize
     )
-
+    
     if status != noErr {
         print("Error getting device ID array size: \(status)")
         exit(1)
     }
-
+    
     // get the device ID array
     let count = Int(dataSize) / MemoryLayout<AudioDeviceID>.size
     deviceIDs = [AudioDeviceID](repeating: 0, count: count)
@@ -46,12 +46,12 @@ func getAudioDeviceIDs() -> [AudioDeviceID] {
         &dataSize,
         &deviceIDs
     )
-
+    
     if status != noErr {
         print("Error getting device ID array: \(status)")
         exit(1)
     }
-
+    
     return deviceIDs
 }
 
@@ -126,4 +126,5 @@ func main() {
         print("Name|~~|\(device.localizedName)+UDID|~~|\(device.uniqueID)+|~~|")
     }
 }
+
 main()
