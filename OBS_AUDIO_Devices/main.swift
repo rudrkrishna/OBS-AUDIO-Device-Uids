@@ -7,8 +7,9 @@
 
 import Foundation
 import CoreAudio
+import CoreMedia
 import AVFoundation
-
+import Foundation
 
 func getAudioDeviceIDs() -> [AudioDeviceID] {
     var propertyAddress = AudioObjectPropertyAddress(
@@ -112,16 +113,17 @@ func getVideoDevices() -> [AVCaptureDevice] {
     return devices
 }
 
+
 func main() {
     let deviceIDs = getAudioDeviceIDs()
        let deviceNamesAndUIDs = getAudioDeviceNamesAndUIDs(deviceIDs: deviceIDs)
        for (_,device) in deviceNamesAndUIDs.enumerated() {
-           print("Name:\(device.name)+UDID:\(device.uid)")
+           print("Name|~~|\(device.name)+UDID|~~|\(device.uid)+|~~|")
        }
     
     let videoDevices = getVideoDevices()
     for device in videoDevices {
-        print("Name:\(device.localizedName)+UDID:\(device.uniqueID)")
+        print("Name|~~|\(device.localizedName)+UDID|~~|\(device.uniqueID)+|~~|")
     }
 }
 main()
